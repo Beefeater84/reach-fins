@@ -1,6 +1,7 @@
 ## Agent instructions
 
 - All comments in the code should be in English.
+- All tasks located in `tasks` folder.
 
 ## Technology stack
 
@@ -26,4 +27,4 @@ We will use OpenAI API to understand user question and extract relevant data fro
 - [React Router v6](https://reactrouter.com/en/main)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [Vite](https://vitejs.dev/guide/)
-- [Supabase MCP](https://supabase.com/docs/guides/local-development)
+- [Supabase local development](https://supabase.com/docs/guides/local-development)
