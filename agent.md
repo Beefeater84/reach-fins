@@ -3,6 +3,11 @@
 - All comments in the code should be in English.
 - All tasks located in `tasks` folder.
 
+## Tasks
+
+- [Setup project](tasks/setup.md)
+- [Connect to Supabase](tasks/connect-to-supabase.md)
+
 ## Technology stack
 
 - React 19
@@ -12,6 +17,7 @@
 - React Router v6
 - Superbase
 - OpenAI API
+- AWS Amplify (hosting for static files, SSR disabled)
 
 ## Project description
 
