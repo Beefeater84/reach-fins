@@ -34,3 +34,51 @@ We will use OpenAI API to understand user question and extract relevant data fro
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [Vite](https://vitejs.dev/guide/)
 - [Supabase local development](https://supabase.com/docs/guides/local-development)
+
+## Process for Creating New Tasks
+
+The following process is used for creating new development tasks:
+
+### 1. Task Preparation
+
+1. **Use the template**: Take the template from `doc/ai_task_template.md` as the foundation for task planning
+2. **Fill in key sections**:
+   - **Problem**: Clearly describe the problem that needs to be solved
+   - **Current task**: Formulate the specific task and expected outcome
+   - **Solution paths**: Propose technical solution options considering the current architecture
+
+### 2. Planning and Coordination
+
+1. **Analyze current state**: Analyze existing code and architecture
+2. **Define technical solution**: Choose the optimal approach considering:
+   - Existing technical stack
+   - Feature-Sliced Design architecture
+   - Performance and security requirements
+3. **Create implementation plan**: Break down the task into phases with specification of files to be modified
+
+### 3. Confirmation Before Implementation
+
+⚠️ **IMPORTANT**: Before starting code changes, it is necessary to:
+
+1. **Present the plan to the user** with detailed description of:
+   - Which files will be modified
+   - What functionality will be added/changed
+   - Possible risks and side effects
+2. **Wait for confirmation** from the user
+3. **Make adjustments** to the plan if necessary
+
+### 4. Implementation Rules
+
+- **Prohibited** to modify code files before receiving user confirmation
+- **Must** use existing technical stack
+- **Must** test changes before committing
+
+### 5. Language Requirements
+
+⚠️ **IMPORTANT**: All development artifacts must be in English:
+
+- **All tasks and documentation** must be written in English
+- **All code comments** must be in English
+- **All commit messages** must be in English
+- **All variable names, function names, and identifiers** must be in English
+- **All error messages and user-facing text** must be in English (unless localization is specifically required)
