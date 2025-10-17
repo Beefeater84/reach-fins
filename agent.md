@@ -26,12 +26,48 @@ User can ask questions about these Finns. And our application should answer thes
 
 We will use OpenAI API to understand user question and extract relevant data from DB.
 
+## Typography Guidelines
+
+We use **@tailwindcss/typography** plugin for consistent content styling:
+
+### Setup
+
+- Typography plugin is configured in `app/application/styles/tailwind.css`
+- Custom text sizes are defined in `@theme` section with line-height values
+
+### Usage Pattern
+
+For content-heavy components, use the `prose` classes:
+
+```tsx
+<div className="prose prose-lg prose-slate dark:prose-invert max-w-none">
+  {/* Content with automatic typography styling */}
+</div>
+```
+
+### Available Classes
+
+- `prose` - base typography styles
+- `prose-lg` - larger text size
+- `prose-slate` - gray color scheme
+- `dark:prose-invert` - dark theme support
+- `max-w-none` - removes default width constraints
+
+### Custom Text Sizes Available
+
+- `text-xs` (0.75rem) to `text-9xl` (8rem)
+- Each size includes corresponding line-height
+- Custom fonts: `font-sans` (Inter) and `font-display` (Lexend)
+
+**Best Practice**: Use `prose` classes for rich content (articles, descriptions) and individual text size classes for UI components.
+
 ## Links and docs:
 
 - [Supabase](https://supabase.com/docs)
 - [OpenAI API](https://platform.openai.com/docs/api-reference)
 - [React Router v6](https://reactrouter.com/en/main)
 - [Tailwind CSS](https://tailwindcss.com/docs)
+- [Tailwind Typography](https://tailwindcss.com/docs/typography-plugin)
 - [Vite](https://vitejs.dev/guide/)
 - [Supabase local development](https://supabase.com/docs/guides/local-development)
 

@@ -1,5 +1,9 @@
 import { Container } from '@/shared/components/Container'
 import Header from '@/widgets/header'
+import { ProblemDescription } from './ui/problem'
+import { ProjectDescription } from './ui/project-description'
+import { Stages } from './ui/stages'
+import { TryItOut } from './ui/try-it-out'
 
 const people = [
   {
@@ -45,9 +49,11 @@ export function Page() {
     <>
       <Header />
       <main>
-        HEADER <br /> ОПИСАНИЕ ПРОЕКТА <br /> ОПИСАНИЕ ФАЗ ПРОЕКТА <br />{' '}
-        ОПИСАНИЕ РЕШЕННОЙ ПРОБЛЕМЫ <br />
-        ПРЕДЛОЖЕНИЕ ПОПРОБОВАТЬ <br /> ФОРМА ОБРАТНОЙ СВЯЗИ <br /> ТАБЛИЦА
+        <ProjectDescription />
+        <ProblemDescription />
+        <Stages />
+        <TryItOut />
+
         <Container className="pt-20 pb-16 lg:pt-32">
           <form action="#" className="mt-10 grid grid-cols-1 gap-y-8">
             <div className="col-span-full">
