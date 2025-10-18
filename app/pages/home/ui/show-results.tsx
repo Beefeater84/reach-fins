@@ -1,13 +1,18 @@
-import { getReachFinns } from '@/entities/reach-finns'
+import { getPaginationQuery, getReachFinns } from '@/entities/reach-finns'
 import { Container } from '@/shared/components/Container'
 import { Pagination } from '@/shared/components/Pagination'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 
 interface ShowResultsProps {
   isLoading: boolean
 }
 
 export const ShowResults = ({ isLoading }: ShowResultsProps) => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [paginationData, setPaginationData] = useState<any>(null)
+  const [isPaginationLoading, setIsPaginationLoading] = useState(false)
+
   const { isError, data } = useQuery({
     //@ts-expect-error
     queryKey: ['getReachFinns'],
@@ -16,6 +21,67 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
+
+  const paginationMutation = useMutation({
+    mutationFn: ({
+      generatedQuery,
+      page,
+    }: {
+      generatedQuery: string
+      page: number
+    }) => getPaginationQuery(generatedQuery, page),
+    onMutate: () => {
+      setIsPaginationLoading(true)
+    },
+    onSuccess: (paginatedData) => {
+      // Update pagination data with new results
+      if (paginatedData && data) {
+        const updatedData = {
+          ...data,
+          results: paginatedData,
+          pagination: {
+            ...data.pagination,
+            startIndex: (currentPage - 1) * data.pagination.currentPageSize,
+            endIndex: Math.min(
+              currentPage * data.pagination.currentPageSize - 1,
+              data.pagination.totalCount - 1,
+            ),
+            hasNextPage:
+              currentPage * data.pagination.currentPageSize <
+              data.pagination.totalCount,
+            hasPreviousPage: currentPage > 1,
+          },
+        }
+        setPaginationData(updatedData)
+      }
+      setIsPaginationLoading(false)
+    },
+    onError: (error) => {
+      console.error('Pagination error:', error)
+      setIsPaginationLoading(false)
+    },
+  })
+
+  // Reset pagination when new data is received
+  useEffect(() => {
+    if (data) {
+      setCurrentPage(1)
+      setPaginationData(null)
+    }
+  }, [data])
+
+  const handlePageChange = (direction: 'next' | 'previous') => {
+    if (!data?.generatedQuery) return
+
+    const newPage = direction === 'next' ? currentPage + 1 : currentPage - 1
+    setCurrentPage(newPage)
+
+    paginationMutation.mutate({
+      generatedQuery: data.generatedQuery,
+      page: newPage,
+    })
+  } // Use pagination data if available, otherwise use original data
+  const displayData = paginationData || data
 
   const SkeletonRow = () => (
     <tr className="w-full animate-pulse">
@@ -38,7 +104,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
     return <span>Error</span>
   }
 
-  if (isLoading && !data) {
+  if ((isLoading || isPaginationLoading) && !displayData) {
     return (
       <Container className="pt-5 pb-16 lg:pt-5">
         {Array.from({ length: 6 }).map((_, i) => (
@@ -83,7 +149,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-white/10">
-                {data?.results?.map((person: any) => (
+                {displayData?.results?.map((person: any) => (
                   <tr key={person?.email}>
                     <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">
                       {person?.name}
@@ -105,13 +171,10 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
         </div>
       </div>
 
-      {data?.pagination && (
+      {displayData?.pagination && (
         <Pagination
-          pagination={data.pagination}
-          onPageChange={(direction) => {
-            // TODO: Implement page change logic
-            console.log('Page change:', direction)
-          }}
+          pagination={displayData.pagination}
+          onPageChange={handlePageChange}
         />
       )}
     </Container>

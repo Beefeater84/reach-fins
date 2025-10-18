@@ -60,6 +60,21 @@ The project uses the following environment variables that must be configured in 
 
 This response format is used for the initial user query processing. The main handler for user requests is implemented in `app\entities\reach-finns\api\get-reach-finns.ts`.
 
+### Query Processing Architecture
+
+The application uses a two-tier approach for handling user queries:
+
+1. **Initial Query Processing** (`get-reach-finns.ts`):
+   - Processes user's natural language question through OpenAI API
+   - Returns structured response with `generatedQuery` in PostgREST format
+   - Goes through Lambda function for AI processing
+
+2. **Pagination Requests** (`get-pagination-query.ts`):
+   - Uses the `generatedQuery` from initial response for subsequent pages
+   - Makes direct requests to Supabase PostgREST API
+   - Handles pagination by adding `offset` parameter to the query
+   - Faster response time since it bypasses AI processing
+
 The OpenAI API integration returns structured responses in the following format:
 
 ```json
