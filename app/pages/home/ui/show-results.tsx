@@ -1,5 +1,6 @@
 import { getReachFinns } from '@/entities/reach-finns'
 import { Container } from '@/shared/components/Container'
+import { Pagination } from '@/shared/components/Pagination'
 import { useQuery } from '@tanstack/react-query'
 
 interface ShowResultsProps {
@@ -82,7 +83,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-white/10">
-                {data?.results?.map((person) => (
+                {data?.results?.map((person: any) => (
                   <tr key={person?.email}>
                     <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">
                       {person?.name}
@@ -103,6 +104,16 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
           </div>
         </div>
       </div>
+
+      {data?.pagination && (
+        <Pagination
+          pagination={data.pagination}
+          onPageChange={(direction) => {
+            // TODO: Implement page change logic
+            console.log('Page change:', direction)
+          }}
+        />
+      )}
     </Container>
   )
 }
