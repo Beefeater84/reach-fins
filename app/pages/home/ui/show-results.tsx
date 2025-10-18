@@ -80,7 +80,20 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
       generatedQuery: data.generatedQuery,
       page: newPage,
     })
-  } // Use pagination data if available, otherwise use original data
+  }
+
+  const handlePageSelect = (page: number) => {
+    if (!data?.generatedQuery) return
+
+    setCurrentPage(page)
+
+    paginationMutation.mutate({
+      generatedQuery: data.generatedQuery,
+      page: page,
+    })
+  }
+
+  // Use pagination data if available, otherwise use original data
   const displayData = paginationData || data
 
   const SkeletonRow = () => (
@@ -175,6 +188,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
         <Pagination
           pagination={displayData.pagination}
           onPageChange={handlePageChange}
+          onPageSelect={handlePageSelect}
         />
       )}
     </Container>

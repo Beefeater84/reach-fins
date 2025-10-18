@@ -8,9 +8,14 @@ interface PaginationProps {
     hasPreviousPage: boolean
   }
   onPageChange: (direction: 'next' | 'previous') => void
+  onPageSelect?: (page: number) => void
 }
 
-export const Pagination = ({ pagination, onPageChange }: PaginationProps) => {
+export const Pagination = ({
+  pagination,
+  onPageChange,
+  onPageSelect,
+}: PaginationProps) => {
   const {
     currentPageSize,
     totalCount,
@@ -96,16 +101,12 @@ export const Pagination = ({ pagination, onPageChange }: PaginationProps) => {
               return (
                 <button
                   key={pageNumber}
-                  onClick={() => {
-                    const targetStartIndex = (pageNumber - 1) * currentPageSize
-                    // This would need to be handled by parent component
-                    // For now, we'll just use next/previous
-                  }}
-                  disabled
+                  onClick={() => onPageSelect?.(pageNumber)}
+                  disabled={isCurrentPage || !onPageSelect}
                   className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset focus:z-20 focus:outline-offset-0 ${
                     isCurrentPage
                       ? 'z-10 bg-blue-600 text-white ring-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-                      : 'text-gray-900 ring-gray-300 hover:bg-gray-50 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-700'
+                      : 'text-gray-900 ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-700'
                   }`}
                 >
                   {pageNumber}
