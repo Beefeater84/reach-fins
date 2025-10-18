@@ -2,6 +2,8 @@ import { LAMBDA_URL } from '../const'
 
 export const getReachFinns = async (query: string) => {
   try {
+    if (!query) return null
+
     const response = await fetch(LAMBDA_URL, {
       method: 'POST',
       body: JSON.stringify({ query }),
