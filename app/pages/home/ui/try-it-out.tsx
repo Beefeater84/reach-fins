@@ -24,10 +24,10 @@ export const TryItOut = () => {
     getReachFinnsRequest.data?.error === 'Failed to fetch data from database'
 
   const sampleQuestions = [
-    'How many people earned over 1 million euros in 2023?',
-    'What was the average income in Central Finland?',
-    'Show me how many high-earners in each region?',
-    'In what Region do most high-earners live?',
+    'How many people earned over 1 million euros?',
+    'Who are the youngest millionaires? Show people under 35 with highest earnings',
+    'Show me people who earn more from investments than from work',
+    'Who pays the highest tax rates and how much do they earn?',
   ]
 
   const handleSubmit = () => {
@@ -87,7 +87,9 @@ export const TryItOut = () => {
                 htmlFor="question-textarea"
                 className="block text-sm/6 font-medium text-gray-900 dark:text-white"
               >
-                Ask your question about Finnish high-earner data
+                Ask your question about Finnish high-earner dataю ( It can't
+                show you average income or group by province yet ). So try to
+                find your boss.
               </label>
               <div className="mt-2">
                 <textarea

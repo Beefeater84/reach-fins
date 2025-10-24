@@ -46,15 +46,14 @@ export const formatPercentage = (value: number | string | null): string => {
     return '-'
   }
 
-  // Convert decimal to percentage and format
+  // Data comes as percentage value (e.g., 57.3 for 57.3%), not decimal (0.573)
+  // So we divide by 100 first before using Intl percent formatting
   return new Intl.NumberFormat('fi-FI', {
     style: 'percent',
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
-  }).format(numericValue)
-}
-
-/**
+  }).format(numericValue / 100)
+} /**
  * Format numeric values with thousand separators
  * @param value - Numeric value to format
  * @returns Formatted number string
