@@ -26,8 +26,9 @@ export const TryItOut = () => {
   const sampleQuestions = [
     'How many people earned over 1 million euros?',
     'Who are the youngest millionaires? Show people under 35 with highest earnings',
-    'Show me people who earn more from investments than from work',
     'Who pays the highest tax rates and how much do they earn?',
+    'Who received the biggest tax refunds and how much did they earn?',
+    'Show people from Uusimaa province ranked in top 100 nationally',
   ]
 
   const handleSubmit = () => {
@@ -87,9 +88,9 @@ export const TryItOut = () => {
                 htmlFor="question-textarea"
                 className="block text-sm/6 font-medium text-gray-900 dark:text-white"
               >
-                Ask your question about Finnish high-earner dataю ( It can't
-                show you average income or group by province yet ). So try to
-                find your boss.
+                Ask your question about Finnish high-earner data. Note: Complex
+                comparisons between multiple fields (like comparing work vs
+                investment income) are not supported yet.
               </label>
               <div className="mt-2">
                 <textarea

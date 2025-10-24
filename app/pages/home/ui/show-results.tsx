@@ -263,14 +263,14 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <table className="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
-              <thead>
+              <thead className="bg-gray-50 dark:bg-gray-800/50">
                 <tr>
                   {visibleColumns.map((column, index) => (
                     <th
                       key={column.field}
                       scope="col"
-                      className={`py-3.5 text-sm font-semibold text-gray-900 dark:text-white ${
-                        index === 0 ? 'pr-3 pl-4 sm:pl-0' : 'px-3'
+                      className={`border-b border-gray-200 py-3.5 text-sm font-semibold text-gray-900 dark:border-gray-700 dark:text-white ${
+                        index === 0 ? 'pr-3 pl-4' : 'px-3'
                       } ${column.headerClassName || ''}`}
                     >
                       {column.displayName}
@@ -285,7 +285,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
                       <td
                         key={column.field}
                         className={`py-4 text-sm whitespace-nowrap ${
-                          cellIndex === 0 ? 'pr-3 pl-4 sm:pl-0' : 'px-3'
+                          cellIndex === 0 ? 'pr-3 pl-4' : 'px-3'
                         } ${column.cellClassName || ''}`}
                       >
                         {formatValue(person[column.field], column.dataType)}
