@@ -9,7 +9,6 @@ const navigation = [
   { name: 'Problem', href: '/#project-description' },
   { name: "GPT doesn't help", href: '/#problem-description' },
   { name: 'Stages', href: '/#development-stages' },
-  { name: 'Try it out', href: '/#try-it-out' },
 ]
 
 export default function Header() {
@@ -26,7 +25,7 @@ export default function Header() {
             <Logo />
           </a>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:items-center lg:gap-x-12">
           {navigation.map((item) => (
             <a
               key={item.name}
@@ -36,20 +35,20 @@ export default function Header() {
               {item.name}
             </a>
           ))}
+          <a
+            href="/#try-it-out"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+          >
+            Try it out
+          </a>
         </div>
         <div className="flex flex-1 items-center justify-end gap-x-6">
           <a
             href="https://www.linkedin.com/in/tony-miasoedov-b145801b3/"
             target="_blank"
-            className="hidden text-sm/6 font-semibold text-gray-900 lg:block dark:text-white"
-          >
-            Visit my Linkedin
-          </a>
-          <a
-            href="#"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
           >
-            Sign up
+            Visit my Linkedin
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -76,10 +75,11 @@ export default function Header() {
               <Logo />
             </a>
             <a
-              href="#"
+              href="/#try-it-out"
               className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+              onClick={() => setMobileMenuOpen(false)}
             >
-              Sign up
+              Try it out
             </a>
             <button
               type="button"
