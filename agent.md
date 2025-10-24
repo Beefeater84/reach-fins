@@ -113,6 +113,7 @@ The OpenAI API integration returns structured responses in the following format:
   - `hasNextPage` - Boolean indicating if more pages are available
   - `hasPreviousPage` - Boolean indicating if previous pages exist
 - **`status`** - Query execution status (`completed`, `error`, `processing`)
+- **`note`** - Additional information about the query context (e.g., location-based notes) or null if not applicable
 
 This response format ensures consistent data structure for frontend components and enables proper pagination handling.
 
@@ -230,3 +231,6 @@ This table contains financial and demographic information about individuals, lik
 | `birth_year`       | bigint           | YES      | Year of birth                                     |
 | `rank`             | bigint           | YES      | Overall ranking (likely by income/earnings)       |
 | `province_rank`    | bigint           | YES      | Ranking within the specific province              |
+
+// ToDo : Add What data our database has
+// ToDo: Add what we dont read the date - LLM knows only DB structure and create the request. So event if the data is very big - it not a problem.

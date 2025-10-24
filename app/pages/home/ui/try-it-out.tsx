@@ -88,9 +88,9 @@ export const TryItOut = () => {
                 htmlFor="question-textarea"
                 className="block text-sm/6 font-medium text-gray-900 dark:text-white"
               >
-                Ask your question about Finnish high-earner data. Note: Complex
-                comparisons between multiple fields (like comparing work vs
-                investment income) are not supported yet.
+                Ask your question about Finnish high-earner data. ( It can't
+                show you average income or group by province yet ). So try to
+                find your boss.
               </label>
               <div className="mt-2">
                 <textarea
