@@ -1,8 +1,14 @@
 import { getPaginationQuery, getReachFinns } from '@/entities/reach-finns'
 import { Container } from '@/shared/components/Container'
 import { Pagination } from '@/shared/components/Pagination'
+import type { ColumnConfig } from '@/shared/utils/columnConfig'
+import {
+  getAvailableColumns,
+  getVisibleColumns,
+} from '@/shared/utils/columnConfig'
+import { formatValue } from '@/shared/utils/dataFormatters'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 interface ShowResultsProps {
   isLoading: boolean
@@ -96,20 +102,40 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
   // Use pagination data if available, otherwise use original data
   const displayData = paginationData || data
 
-  const SkeletonRow = () => (
+  // Dynamically determine available and visible columns based on actual data
+  const availableColumns = useMemo(() => {
+    if (!displayData?.results || displayData.results.length === 0) {
+      return []
+    }
+    const columns = getAvailableColumns(displayData.results)
+
+    // Debug: Log available columns in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        'Available columns detected:',
+        columns.map((col) => col.field),
+      )
+    }
+
+    return columns
+  }, [displayData?.results])
+
+  // Get visible columns based on available columns
+  const visibleColumns = useMemo(() => {
+    // For now, show all available columns. Responsive logic can be added later with proper hooks
+    return getVisibleColumns(availableColumns)
+  }, [availableColumns])
+
+  const SkeletonRow = ({ columns }: { columns: ColumnConfig[] }) => (
     <tr className="w-full animate-pulse">
-      <td className="py-4 pr-3 pl-4 sm:pl-0">
-        <div className="h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
-      </td>
-      <td className="px-3 py-4">
-        <div className="h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
-      </td>
-      <td className="px-3 py-4">
-        <div className="h-4 w-48 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
-      </td>
-      <td className="px-3 py-4">
-        <div className="h-4 w-16 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
-      </td>
+      {columns.map((column, index) => (
+        <td
+          key={column.field}
+          className={index === 0 ? 'py-4 pr-3 pl-4 sm:pl-0' : 'px-3 py-4'}
+        >
+          <div className="h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-700"></div>
+        </td>
+      ))}
     </tr>
   )
 
@@ -118,11 +144,31 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
   }
 
   if ((isLoading || isPaginationLoading) && !displayData) {
+    // Use default columns for skeleton loading based on most important fields
+    const defaultSkeletonColumns = getAvailableColumns([
+      {
+        name: 'Loading...',
+        earnings_total: 0,
+        rank: 1,
+        living_province: 'Loading...',
+      },
+    ])
+
     return (
       <Container className="pt-5 pb-16 lg:pt-5">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <SkeletonRow key={i} />
-        ))}
+        <div className="mt-8 flow-root">
+          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <table className="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
+                <tbody className="divide-y divide-gray-200 dark:divide-white/10">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <SkeletonRow key={i} columns={defaultSkeletonColumns} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </Container>
     )
   }
@@ -135,47 +181,32 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
             <table className="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
               <thead>
                 <tr>
-                  <th
-                    scope="col"
-                    className="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white"
-                  >
-                    Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white"
-                  >
-                    Title
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white"
-                  >
-                    Email
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white"
-                  >
-                    Role
-                  </th>
+                  {visibleColumns.map((column, index) => (
+                    <th
+                      key={column.field}
+                      scope="col"
+                      className={`py-3.5 text-sm font-semibold text-gray-900 dark:text-white ${
+                        index === 0 ? 'pr-3 pl-4 sm:pl-0' : 'px-3'
+                      } ${column.headerClassName || ''}`}
+                    >
+                      {column.displayName}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-white/10">
-                {displayData?.results?.map((person: any) => (
-                  <tr key={person?.email}>
-                    <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0 dark:text-white">
-                      {person?.name}
-                    </td>
-                    <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
-                      {person?.title}
-                    </td>
-                    <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
-                      {person?.email}
-                    </td>
-                    <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
-                      {person?.role}
-                    </td>
+                {displayData?.results?.map((person: any, rowIndex: number) => (
+                  <tr key={person?.id || person?.name || rowIndex}>
+                    {visibleColumns.map((column, cellIndex) => (
+                      <td
+                        key={column.field}
+                        className={`py-4 text-sm whitespace-nowrap ${
+                          cellIndex === 0 ? 'pr-3 pl-4 sm:pl-0' : 'px-3'
+                        } ${column.cellClassName || ''}`}
+                      >
+                        {formatValue(person[column.field], column.dataType)}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>

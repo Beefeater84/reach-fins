@@ -208,3 +208,25 @@ The following process is used for creating new development tasks:
 - **All commit messages** must be in English
 - **All variable names, function names, and identifiers** must be in English
 - **All error messages and user-facing text** must be in English (unless localization is specifically required)
+
+## Database Schema
+
+### Table: `people`
+
+This table contains financial and demographic information about individuals, likely from Finnish tax records.
+
+| Column             | Type             | Nullable | Description                                       |
+| ------------------ | ---------------- | -------- | ------------------------------------------------- |
+| `id`               | bigint           | NOT NULL | Primary key, auto-generated identity              |
+| `name`             | text             | YES      | Full name of the person                           |
+| `living_province`  | text             | YES      | Province/region where the person lives            |
+| `earnings_total`   | bigint           | YES      | Total earnings/income in currency units           |
+| `earned_income`    | bigint           | YES      | Income from employment/work                       |
+| `capital_income`   | bigint           | YES      | Income from investments/capital gains             |
+| `tax_rate`         | double precision | YES      | Tax rate applied (as decimal, e.g., 0.25 for 25%) |
+| `income_after_tax` | bigint           | YES      | Net income after tax deductions                   |
+| `remaining_tax`    | text             | YES      | Additional tax information or status              |
+| `refunds`          | bigint           | YES      | Tax refunds received                              |
+| `birth_year`       | bigint           | YES      | Year of birth                                     |
+| `rank`             | bigint           | YES      | Overall ranking (likely by income/earnings)       |
+| `province_rank`    | bigint           | YES      | Ranking within the specific province              |
