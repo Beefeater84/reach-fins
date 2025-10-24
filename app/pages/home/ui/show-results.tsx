@@ -155,7 +155,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
     ])
 
     return (
-      <Container className="pt-5 pb-16 lg:pt-5">
+      <Container className="pb-16">
         <div className="mt-8 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -174,7 +174,63 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
   }
 
   return (
-    <Container className="pt-5 pb-16 lg:pt-5">
+    <Container className="pb-16">
+      {/* Results Summary */}
+      {displayData && (
+        <div className="mt-6 mb-8">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-800/50">
+            {/* Total Results Count */}
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 animate-pulse rounded-full bg-green-500"></div>
+                  <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">
+                      {displayData.totalCount?.toLocaleString() ||
+                        displayData.count?.toLocaleString() ||
+                        0}
+                    </span>{' '}
+                    <span className="text-base">
+                      {(displayData.totalCount || displayData.count || 0) === 1
+                        ? 'person found'
+                        : 'people found'}
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Current Page Range */}
+              {displayData.pagination && (
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Showing{' '}
+                  {(displayData.pagination.startIndex + 1).toLocaleString()}-
+                  {(displayData.pagination.endIndex + 1).toLocaleString()} of{' '}
+                  {displayData.pagination.totalCount.toLocaleString()}
+                </div>
+              )}
+            </div>
+
+            {/* Original Query and Additional Info */}
+            {displayData.originalQuery && (
+              <div className="mt-3 border-t border-gray-200 pt-3 dark:border-gray-600">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <span className="font-medium">Query:</span> "
+                    {displayData.originalQuery}"
+                  </p>
+                  {displayData.status === 'completed' && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-green-700 dark:text-green-400">
+                      <div className="h-2 w-2 rounded-full bg-green-500"></div>
+                      Search completed
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
