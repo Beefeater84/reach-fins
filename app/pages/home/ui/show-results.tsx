@@ -155,7 +155,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
     ])
 
     return (
-      <Container className="pb-16">
+      <Container>
         <div className="mt-8 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -174,7 +174,7 @@ export const ShowResults = ({ isLoading }: ShowResultsProps) => {
   }
 
   return (
-    <Container className="pb-16">
+    <Container>
       {/* Information Note */}
       {displayData?.note && (
         <div className="mt-6 mb-4">

@@ -2,6 +2,7 @@ import { getReachFinns } from '@/entities/reach-finns'
 import { Container } from '@/shared/components/Container'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRef, useState } from 'react'
+import { AvailableData } from './available-data'
 import { ShowResults } from './show-results'
 
 export const TryItOut = () => {
@@ -66,6 +67,7 @@ export const TryItOut = () => {
           <p>
             It's 70 000 people, who earns over 100 000 euros per year in 2023.
           </p>
+
           <div>
             <strong>Try asking questions like:</strong>
             <ul>
@@ -167,6 +169,8 @@ export const TryItOut = () => {
       {!hasErrorResponse && (
         <ShowResults isLoading={getReachFinnsRequest.isPending} />
       )}
+
+      <AvailableData />
     </>
   )
 }
