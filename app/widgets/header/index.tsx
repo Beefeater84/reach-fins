@@ -42,13 +42,13 @@ export default function Header() {
             Try it out
           </a>
         </div>
-        <div className="flex flex-1 items-center justify-end gap-x-6">
+        <div className="flex flex-1 items-center justify-end gap-x-6 lg:hidden">
           <a
-            href="https://www.linkedin.com/in/tony-miasoedov-b145801b3/"
-            target="_blank"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+            href="/#try-it-out"
+            className="ml-auto rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+            onClick={() => setMobileMenuOpen(false)}
           >
-            Visit my Linkedin
+            Try it out
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -102,14 +102,6 @@ export default function Header() {
                     {item.name}
                   </a>
                 ))}
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Log in
-                </a>
               </div>
             </div>
           </div>

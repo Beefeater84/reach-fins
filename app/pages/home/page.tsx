@@ -1,4 +1,5 @@
 import { useAnchorScroll } from '@/shared/hooks/useAnchorScroll'
+import Footer from '@/widgets/footer'
 import Header from '@/widgets/header'
 import { ProblemDescription } from './ui/problem'
 import { ProjectDescription } from './ui/project-description'
@@ -18,6 +19,7 @@ export function Page() {
         <Stages />
         <TryItOut />
       </main>
+      <Footer />
     </>
   )
 }
