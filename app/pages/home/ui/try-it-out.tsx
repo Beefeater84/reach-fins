@@ -68,17 +68,22 @@ export const TryItOut = () => {
             It's 70 000 people, who earns over 100 000 euros per year in 2023.
           </p>
 
-          <div>
-            <strong>Try asking questions like:</strong>
-            <ul>
+          <div className="rounded-lg bg-slate-100/50 p-4 dark:bg-slate-800/30">
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              Try asking questions like:
+            </strong>
+            <ul className="mt-3 list-none space-y-2">
               {sampleQuestions.map((q, index) => (
                 <li key={index}>
                   <button
                     type="button"
                     onClick={() => handleQuestionClick(q)}
-                    className="cursor-pointer text-left underline-offset-4 transition-colors hover:text-indigo-600 hover:underline dark:hover:text-indigo-400"
+                    className="group flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-left text-sm transition-all hover:bg-indigo-50 hover:text-indigo-700 dark:hover:bg-indigo-900/30 dark:hover:text-indigo-300"
                   >
-                    {q}
+                    <span className="flex-shrink-0 text-indigo-500 dark:text-indigo-400">
+                      →
+                    </span>
+                    <span className="group-hover:underline">{q}</span>
                   </button>
                 </li>
               ))}
