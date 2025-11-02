@@ -11,36 +11,9 @@ export const ProjectDescription = () => {
             <strong>next-generation SaaS platform</strong> powered by AI.
           </p>
           <p>
-            It allows you to get the data your company needs by simply asking
-            for it. <strong>No need for individual dashboards</strong> for
-            marketing, sales, and other employees.
-          </p>
-          <p>
-            Everyone has different access rights and requests what they need:
-          </p>
-          <ul>
-            <li>
-              <strong>Marketing</strong> need data on leads and conversions
-            </li>
-            <li>
-              <strong>Sales</strong> need data on customers and their purchases
-            </li>
-            <li>
-              <strong>Finance</strong> need data on revenue and expenses
-            </li>
-          </ul>
-          <p>
-            <strong>
-              AI processes requests and builds the necessary tables and charts
-              on the fly
-            </strong>
-            , without the need to create and maintain dozens of separate
-            reports.
-          </p>
-          <p>
-            This saves time and resources, allowing employees to focus on{' '}
-            <em>data analysis and decision-making</em> rather than report
-            preparation.
+            Where users can get any data they need using{' '}
+            <strong>natural language</strong> queries - no complex interfaces or
+            technical knowledge required.
           </p>
           <div className="mt-8">
             <video
